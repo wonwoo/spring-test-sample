@@ -9,6 +9,10 @@ public class User {
 
   private String email;
 
+  User() {
+    
+  }
+
   public User(String name, String email) {
     this.name = name;
     this.email = email;
