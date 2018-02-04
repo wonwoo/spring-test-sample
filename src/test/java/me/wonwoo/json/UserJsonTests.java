@@ -36,4 +36,13 @@ public class UserJsonTests {
     assertThat(this.json.write(user)).extractingJsonPathStringValue("@.email")
         .isEqualTo("kevin@test.com");
   }
+
+  @Test
+  public void userDeserializeTest() throws Exception {
+    String json = "{\"name\": \"kevin\", \"email\" : \"kevin@test.com\"}";
+    assertThat(this.json.parse(json))
+        .isEqualTo(new User("kevin", "kevin@test.com"));
+    assertThat(this.json.parseObject(json).getName()).isEqualTo("kevin");
+    assertThat(this.json.parseObject(json).getEmail()).isEqualTo("kevin@test.com");
+  }
 }

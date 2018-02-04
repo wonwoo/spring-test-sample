@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,21 +47,22 @@ public class UserDocumentationTests {
         .willReturn(new User("wonwoo", "wonwoo@test.com"));
     this.mvc.perform(get("/users/{name}", "wonwoo").accept(MediaType.APPLICATION_JSON))
         .andDo(print())
+        .andDo(document("{method-name}"))
         .andExpect(status().isOk());
   }
 
   @TestConfiguration
   static class ResultHandlerConfiguration implements RestDocsMockMvcConfigurationCustomizer {
 
-    @Bean
-    public RestDocumentationResultHandler restDocumentation() {
-      return MockMvcRestDocumentation.document("{method-name}");
-    }
+//    @Bean
+//    public RestDocumentationResultHandler restDocumentation() {
+//      return MockMvcRestDocumentation.document("{method-name}");
+//    }
 
     @Override
     public void customize(MockMvcRestDocumentationConfigurer configurer) {
-//      configurer.snippets().withTemplateFormat(TemplateFormats.markdown());
-      configurer.snippets().withTemplateFormat(TemplateFormats.asciidoctor());
+      configurer.snippets().withTemplateFormat(TemplateFormats.markdown());
+//      configurer.snippets().withTemplateFormat(TemplateFormats.asciidoctor());
     }
   }
 }
