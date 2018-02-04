@@ -8,10 +8,10 @@ import org.springframework.data.annotation.Id;
 public class Account {
 
   @Id
-  public String id;
+  private String id;
 
-  public String firstName;
-  public String lastName;
+  private String firstName;
+  private String lastName;
 
   public Account(String firstName, String lastName) {
     this.firstName = firstName;
